@@ -1,0 +1,5 @@
+my:
+  name: wei1
+server:
+  port: 8088
+  name: huwei

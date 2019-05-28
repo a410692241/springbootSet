@@ -1,0 +1,33 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Good Thymes Virtual Grocery</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" media="all"
+          href="../../css/gtvg.css" th:href="@{/css/gtvg.css}"/>
+</head>
+
+<body>
+
+姓名:<p th:text="'中文名:'+${name}" th:value="默认值">Welcome to our grocery store!</p>
+年龄:<a th:if="${age>=18}">成年</a>
+<!--unless就是否的意思,代表相反-->
+<a th:unless="${age>=18}">未成年</a>
+
+<a th:each="str,strState : ${eachStr}">
+    <a th:text="${strState.index}"></a>
+    <a th:text="${strState.count}"></a>
+    <a th:text="${strState.size }"></a>
+    <a th:text="${strState.current }"></a>
+</a>
+<br/>
+<a th:text="${#arrays.length(eachStr)}"></a>
+<a th:text="${#dates.format(birthday,'yyyy-MM-dd')}"></a>
+
+
+</body>
+
+</html>

@@ -1,0 +1,17 @@
+server:
+  port: 8081
+logging:
+  level:
+    #更改默认日志级别(默认是info)
+    com:
+      wei:
+        #该包下的所有日志是debug级别的
+        service: debug
+        #该包下的所有日志是关闭的
+        dao: OFF
+
+        #默认是控制台输出,如果要输出到文件的话
+  path: E:/tmp/mylog.log
+  #日志输入时间+线程的样式
+  #file:
+  #  console: "%-20(%d{yyyy-MM-dd HH:mm:ss} [%thread]) %-5level %logger{80} - %msg%n"

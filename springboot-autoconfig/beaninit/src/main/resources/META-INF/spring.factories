@@ -1,0 +1,2 @@
+#该配置下的类一定会被装配在spring容器之中,须知
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.wei.config.UserConfig

@@ -1,0 +1,534 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.dao.UserDao">
+    <resultMap id="BaseResultMap" type="com.wei.bo.User">
+        <id column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="nickname" jdbcType="VARCHAR" property="nickname"/>
+        <result column="sex" jdbcType="SMALLINT" property="sex"/>
+        <result column="account" jdbcType="VARCHAR" property="account"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+        <result column="area_code" jdbcType="VARCHAR" property="areaCode"/>
+        <result column="head_image" jdbcType="VARCHAR" property="headImage"/>
+        <result column="location_id" jdbcType="BIGINT" property="locationId"/>
+        <result column="authentication" jdbcType="SMALLINT" property="authentication"/>
+        <result column="mobile_token" jdbcType="VARCHAR" property="mobileToken"/>
+        <result column="birth_day" jdbcType="TIMESTAMP" property="birthDay"/>
+        <result column="amount" jdbcType="INTEGER" property="amount"/>
+        <result column="pay_password" jdbcType="VARCHAR" property="payPassword"/>
+        <result column="user_type" jdbcType="SMALLINT" property="userType"/>
+        <result column="valid" jdbcType="SMALLINT" property="valid"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="authentication_remark" jdbcType="VARCHAR" property="authenticationRemark"/>
+        <result column="weixin_open_id" jdbcType="VARCHAR" property="weixinOpenId"/>
+        <result column="real_name" jdbcType="VARCHAR" property="realName"/>
+        <result column="community_id" jdbcType="INTEGER" property="communityId"/>
+        <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
+        <result column="id_num" jdbcType="VARCHAR" property="idNum"/>
+        <result column="weixin_num" jdbcType="VARCHAR" property="weixinNum"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        user_id, nickname, sex, account, `password`, address, area_code, head_image, location_id,
+        authentication, mobile_token, birth_day, amount, pay_password, user_type, `valid`,
+        email, authentication_remark, weixin_open_id, real_name, community_id, mobile, id_num,
+        weixin_num, create_time
+    </sql>
+    <select id="selectByExample" parameterType="com.wei.bo.UserExample" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from user
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+        <if test="limit != null">
+            <if test="offset != null">
+                limit ${offset}, ${limit}
+            </if>
+            <if test="offset == null">
+                limit ${limit}
+            </if>
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        where user_id = #{userId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from user
+        where user_id = #{userId,jdbcType=INTEGER}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.wei.bo.UserExample">
+        delete from user
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" keyColumn="user_id" keyProperty="userId" parameterType="com.wei.bo.User"
+            useGeneratedKeys="true">
+        insert into user (nickname, sex, account,
+        `password`, address, area_code,
+        head_image, location_id, authentication,
+        mobile_token, birth_day, amount,
+        pay_password, user_type, `valid`,
+        email, authentication_remark, weixin_open_id,
+        real_name, community_id, mobile,
+        id_num, weixin_num, create_time
+        )
+        values (#{nickname,jdbcType=VARCHAR}, #{sex,jdbcType=SMALLINT}, #{account,jdbcType=VARCHAR},
+        #{password,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{areaCode,jdbcType=VARCHAR},
+        #{headImage,jdbcType=VARCHAR}, #{locationId,jdbcType=BIGINT}, #{authentication,jdbcType=SMALLINT},
+        #{mobileToken,jdbcType=VARCHAR}, #{birthDay,jdbcType=TIMESTAMP}, #{amount,jdbcType=INTEGER},
+        #{payPassword,jdbcType=VARCHAR}, #{userType,jdbcType=SMALLINT}, #{valid,jdbcType=SMALLINT},
+        #{email,jdbcType=VARCHAR}, #{authenticationRemark,jdbcType=VARCHAR}, #{weixinOpenId,jdbcType=VARCHAR},
+        #{realName,jdbcType=VARCHAR}, #{communityId,jdbcType=INTEGER}, #{mobile,jdbcType=VARCHAR},
+        #{idNum,jdbcType=VARCHAR}, #{weixinNum,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+    <insert id="insertSelective" keyColumn="user_id" keyProperty="userId" parameterType="com.wei.bo.User"
+            useGeneratedKeys="true">
+        insert into user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="nickname != null">
+                nickname,
+            </if>
+            <if test="sex != null">
+                sex,
+            </if>
+            <if test="account != null">
+                account,
+            </if>
+            <if test="password != null">
+                `password`,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="areaCode != null">
+                area_code,
+            </if>
+            <if test="headImage != null">
+                head_image,
+            </if>
+            <if test="locationId != null">
+                location_id,
+            </if>
+            <if test="authentication != null">
+                authentication,
+            </if>
+            <if test="mobileToken != null">
+                mobile_token,
+            </if>
+            <if test="birthDay != null">
+                birth_day,
+            </if>
+            <if test="amount != null">
+                amount,
+            </if>
+            <if test="payPassword != null">
+                pay_password,
+            </if>
+            <if test="userType != null">
+                user_type,
+            </if>
+            <if test="valid != null">
+                `valid`,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="authenticationRemark != null">
+                authentication_remark,
+            </if>
+            <if test="weixinOpenId != null">
+                weixin_open_id,
+            </if>
+            <if test="realName != null">
+                real_name,
+            </if>
+            <if test="communityId != null">
+                community_id,
+            </if>
+            <if test="mobile != null">
+                mobile,
+            </if>
+            <if test="idNum != null">
+                id_num,
+            </if>
+            <if test="weixinNum != null">
+                weixin_num,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="nickname != null">
+                #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                #{sex,jdbcType=SMALLINT},
+            </if>
+            <if test="account != null">
+                #{account,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="areaCode != null">
+                #{areaCode,jdbcType=VARCHAR},
+            </if>
+            <if test="headImage != null">
+                #{headImage,jdbcType=VARCHAR},
+            </if>
+            <if test="locationId != null">
+                #{locationId,jdbcType=BIGINT},
+            </if>
+            <if test="authentication != null">
+                #{authentication,jdbcType=SMALLINT},
+            </if>
+            <if test="mobileToken != null">
+                #{mobileToken,jdbcType=VARCHAR},
+            </if>
+            <if test="birthDay != null">
+                #{birthDay,jdbcType=TIMESTAMP},
+            </if>
+            <if test="amount != null">
+                #{amount,jdbcType=INTEGER},
+            </if>
+            <if test="payPassword != null">
+                #{payPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="userType != null">
+                #{userType,jdbcType=SMALLINT},
+            </if>
+            <if test="valid != null">
+                #{valid,jdbcType=SMALLINT},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="authenticationRemark != null">
+                #{authenticationRemark,jdbcType=VARCHAR},
+            </if>
+            <if test="weixinOpenId != null">
+                #{weixinOpenId,jdbcType=VARCHAR},
+            </if>
+            <if test="realName != null">
+                #{realName,jdbcType=VARCHAR},
+            </if>
+            <if test="communityId != null">
+                #{communityId,jdbcType=INTEGER},
+            </if>
+            <if test="mobile != null">
+                #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="idNum != null">
+                #{idNum,jdbcType=VARCHAR},
+            </if>
+            <if test="weixinNum != null">
+                #{weixinNum,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.wei.bo.UserExample" resultType="java.lang.Long">
+        select count(*) from user
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update user
+        <set>
+            <if test="record.userId != null">
+                user_id = #{record.userId,jdbcType=INTEGER},
+            </if>
+            <if test="record.nickname != null">
+                nickname = #{record.nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="record.sex != null">
+                sex = #{record.sex,jdbcType=SMALLINT},
+            </if>
+            <if test="record.account != null">
+                account = #{record.account,jdbcType=VARCHAR},
+            </if>
+            <if test="record.password != null">
+                `password` = #{record.password,jdbcType=VARCHAR},
+            </if>
+            <if test="record.address != null">
+                address = #{record.address,jdbcType=VARCHAR},
+            </if>
+            <if test="record.areaCode != null">
+                area_code = #{record.areaCode,jdbcType=VARCHAR},
+            </if>
+            <if test="record.headImage != null">
+                head_image = #{record.headImage,jdbcType=VARCHAR},
+            </if>
+            <if test="record.locationId != null">
+                location_id = #{record.locationId,jdbcType=BIGINT},
+            </if>
+            <if test="record.authentication != null">
+                authentication = #{record.authentication,jdbcType=SMALLINT},
+            </if>
+            <if test="record.mobileToken != null">
+                mobile_token = #{record.mobileToken,jdbcType=VARCHAR},
+            </if>
+            <if test="record.birthDay != null">
+                birth_day = #{record.birthDay,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.amount != null">
+                amount = #{record.amount,jdbcType=INTEGER},
+            </if>
+            <if test="record.payPassword != null">
+                pay_password = #{record.payPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="record.userType != null">
+                user_type = #{record.userType,jdbcType=SMALLINT},
+            </if>
+            <if test="record.valid != null">
+                `valid` = #{record.valid,jdbcType=SMALLINT},
+            </if>
+            <if test="record.email != null">
+                email = #{record.email,jdbcType=VARCHAR},
+            </if>
+            <if test="record.authenticationRemark != null">
+                authentication_remark = #{record.authenticationRemark,jdbcType=VARCHAR},
+            </if>
+            <if test="record.weixinOpenId != null">
+                weixin_open_id = #{record.weixinOpenId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.realName != null">
+                real_name = #{record.realName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.communityId != null">
+                community_id = #{record.communityId,jdbcType=INTEGER},
+            </if>
+            <if test="record.mobile != null">
+                mobile = #{record.mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="record.idNum != null">
+                id_num = #{record.idNum,jdbcType=VARCHAR},
+            </if>
+            <if test="record.weixinNum != null">
+                weixin_num = #{record.weixinNum,jdbcType=VARCHAR},
+            </if>
+            <if test="record.createTime != null">
+                create_time = #{record.createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update user
+        set user_id = #{record.userId,jdbcType=INTEGER},
+        nickname = #{record.nickname,jdbcType=VARCHAR},
+        sex = #{record.sex,jdbcType=SMALLINT},
+        account = #{record.account,jdbcType=VARCHAR},
+        `password` = #{record.password,jdbcType=VARCHAR},
+        address = #{record.address,jdbcType=VARCHAR},
+        area_code = #{record.areaCode,jdbcType=VARCHAR},
+        head_image = #{record.headImage,jdbcType=VARCHAR},
+        location_id = #{record.locationId,jdbcType=BIGINT},
+        authentication = #{record.authentication,jdbcType=SMALLINT},
+        mobile_token = #{record.mobileToken,jdbcType=VARCHAR},
+        birth_day = #{record.birthDay,jdbcType=TIMESTAMP},
+        amount = #{record.amount,jdbcType=INTEGER},
+        pay_password = #{record.payPassword,jdbcType=VARCHAR},
+        user_type = #{record.userType,jdbcType=SMALLINT},
+        `valid` = #{record.valid,jdbcType=SMALLINT},
+        email = #{record.email,jdbcType=VARCHAR},
+        authentication_remark = #{record.authenticationRemark,jdbcType=VARCHAR},
+        weixin_open_id = #{record.weixinOpenId,jdbcType=VARCHAR},
+        real_name = #{record.realName,jdbcType=VARCHAR},
+        community_id = #{record.communityId,jdbcType=INTEGER},
+        mobile = #{record.mobile,jdbcType=VARCHAR},
+        id_num = #{record.idNum,jdbcType=VARCHAR},
+        weixin_num = #{record.weixinNum,jdbcType=VARCHAR},
+        create_time = #{record.createTime,jdbcType=TIMESTAMP}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wei.bo.User">
+        update user
+        <set>
+            <if test="nickname != null">
+                nickname = #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=SMALLINT},
+            </if>
+            <if test="account != null">
+                account = #{account,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                `password` = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="areaCode != null">
+                area_code = #{areaCode,jdbcType=VARCHAR},
+            </if>
+            <if test="headImage != null">
+                head_image = #{headImage,jdbcType=VARCHAR},
+            </if>
+            <if test="locationId != null">
+                location_id = #{locationId,jdbcType=BIGINT},
+            </if>
+            <if test="authentication != null">
+                authentication = #{authentication,jdbcType=SMALLINT},
+            </if>
+            <if test="mobileToken != null">
+                mobile_token = #{mobileToken,jdbcType=VARCHAR},
+            </if>
+            <if test="birthDay != null">
+                birth_day = #{birthDay,jdbcType=TIMESTAMP},
+            </if>
+            <if test="amount != null">
+                amount = #{amount,jdbcType=INTEGER},
+            </if>
+            <if test="payPassword != null">
+                pay_password = #{payPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="userType != null">
+                user_type = #{userType,jdbcType=SMALLINT},
+            </if>
+            <if test="valid != null">
+                `valid` = #{valid,jdbcType=SMALLINT},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="authenticationRemark != null">
+                authentication_remark = #{authenticationRemark,jdbcType=VARCHAR},
+            </if>
+            <if test="weixinOpenId != null">
+                weixin_open_id = #{weixinOpenId,jdbcType=VARCHAR},
+            </if>
+            <if test="realName != null">
+                real_name = #{realName,jdbcType=VARCHAR},
+            </if>
+            <if test="communityId != null">
+                community_id = #{communityId,jdbcType=INTEGER},
+            </if>
+            <if test="mobile != null">
+                mobile = #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="idNum != null">
+                id_num = #{idNum,jdbcType=VARCHAR},
+            </if>
+            <if test="weixinNum != null">
+                weixin_num = #{weixinNum,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where user_id = #{userId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wei.bo.User">
+        update user
+        set nickname = #{nickname,jdbcType=VARCHAR},
+        sex = #{sex,jdbcType=SMALLINT},
+        account = #{account,jdbcType=VARCHAR},
+        `password` = #{password,jdbcType=VARCHAR},
+        address = #{address,jdbcType=VARCHAR},
+        area_code = #{areaCode,jdbcType=VARCHAR},
+        head_image = #{headImage,jdbcType=VARCHAR},
+        location_id = #{locationId,jdbcType=BIGINT},
+        authentication = #{authentication,jdbcType=SMALLINT},
+        mobile_token = #{mobileToken,jdbcType=VARCHAR},
+        birth_day = #{birthDay,jdbcType=TIMESTAMP},
+        amount = #{amount,jdbcType=INTEGER},
+        pay_password = #{payPassword,jdbcType=VARCHAR},
+        user_type = #{userType,jdbcType=SMALLINT},
+        `valid` = #{valid,jdbcType=SMALLINT},
+        email = #{email,jdbcType=VARCHAR},
+        authentication_remark = #{authenticationRemark,jdbcType=VARCHAR},
+        weixin_open_id = #{weixinOpenId,jdbcType=VARCHAR},
+        real_name = #{realName,jdbcType=VARCHAR},
+        community_id = #{communityId,jdbcType=INTEGER},
+        mobile = #{mobile,jdbcType=VARCHAR},
+        id_num = #{idNum,jdbcType=VARCHAR},
+        weixin_num = #{weixinNum,jdbcType=VARCHAR},
+        create_time = #{createTime,jdbcType=TIMESTAMP}
+        where user_id = #{userId,jdbcType=INTEGER}
+    </update>
+</mapper>
